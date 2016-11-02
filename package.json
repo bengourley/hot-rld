@@ -1,0 +1,15 @@
+{
+  "name": "hot-rld",
+  "version": "0.0.0",
+  "description": "Hot reload some browser javascript",
+  "main": "index.js",
+  "license": "MIT",
+  "bin": {
+    "hot-rld": "cli.js"
+  },
+  "dependencies": {
+    "gaze": "^1.1.2",
+    "hat": "^0.0.3",
+    "minimist": "^1.2.0"
+  }
+}
