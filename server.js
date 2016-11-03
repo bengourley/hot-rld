@@ -15,6 +15,10 @@ module.exports = (bundlePath, scriptSrc) => {
       console.log(`${prefix} bundle update detected`)
       for (const client of clients) client.write(`data: ${scriptSrc}\n\n`)
     })
+    setInterval(() => {
+      // 💛 beat
+      for (const client of clients) client.write(`\n\n`)
+    }, 10 * 1000)
   })
 
   return (req, res) => {
