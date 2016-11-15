@@ -11,5 +11,8 @@
     "gaze": "^1.1.2",
     "hat": "^0.0.3",
     "minimist": "^1.2.0"
+  },
+  "devDependencies": {
+    "standard": "^8.5.0"
   }
 }

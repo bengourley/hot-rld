@@ -1,42 +1,46 @@
 #!/usr/bin/env node
 
 const argv = require('minimist')(process.argv.slice(2))
+const path = require('path')
 
 const help = `
   hot-rld
-  usage: hot-rld -b path/to/bundle.js -s /web/route/to/bundle.js
+  usage: hot-rld -s static [glob ...]
 
-  -b --bundle [required]
-    Path to the js bundle that you want to watch
-    for changes/updates.
+  -s --static
+    The static directory served by your web server.
 
-  -s --src [required]
-    The path to the js bundle as it exists in
-    the <script src=""> attribute in your html.
+  -w --web-prefix [optional]
+    The prefix path to your static assets, if different
+    to the name of the static directory.
 
   -p --port [optional] [default: 9909]
     The port you want the web server to listen on.
-
 `
 
-if (argv.help || argv.h) return console.log(help)
+const run = () => {
+  if (argv.help || argv.h) return console.log(help)
 
-const bundlePath = argv.b || argv.bundle
-const scriptSrc = argv.s || argv.scriptSrc
-const port = argv.p || argv.port || '9909'
+  const port = argv.p || argv.port || '9909'
+  const globs = argv._
+  const staticPath = argv.s || argv.static
+  const webPrefix = argv.w || argv['web-prefix'] || `/${staticPath}`
 
-if (!bundlePath || !scriptSrc) return console.log(help)
+  if (!globs.length || !staticPath) return console.log(help)
 
-const sseServer = require('./server')(bundlePath, scriptSrc)
+  const sseServer = require('./server')(path.resolve(process.cwd(), staticPath), globs, webPrefix)
 
-const server = (req, res) => {
-  if (req.url !== '/') {
-    res.writeHead(404)
-    return res.end('Not found')
+  const server = (req, res) => {
+    if (req.url !== '/') {
+      res.writeHead(404)
+      return res.end('Not found')
+    }
+    sseServer(req, res)
   }
-  sseServer(req, res)
+
+  require('http').createServer(server).listen(port, '127.0.0.1', () => {
+    console.log(`[🔥 ] hot app reload server listening on http://localhost:${port}/`)
+  })
 }
 
-require('http').createServer(server).listen(port, '127.0.0.1', () => {
-  console.log(`[🔥 ] hot app reload server listening on http://localhost:${port}/`)
-})
+run()

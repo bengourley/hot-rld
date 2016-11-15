@@ -4,22 +4,28 @@ const path = require('path')
 
 const prefix = '[hot-rld]'
 
-module.exports = (bundlePath, scriptSrc) => {
+module.exports = (staticPath, globs, webPrefix) => {
   const clients = new Set()
 
-  gaze(path.resolve(process.cwd(), bundlePath), (err, watcher) => {
-    if (err) return console.log(prefix, err.stack)
-    const watched = watcher.relative()
-    console.log(`${prefix} watching ${Object.keys(watched).map(k => `${k}${watched[k]}`).join(', ')}`)
-    watcher.on('changed', (file) => {
-      console.log(`${prefix} bundle update detected`)
-      for (const client of clients) client.write(`data: ${scriptSrc}\n\n`)
+  globs.forEach(glob => {
+    gaze(path.resolve(staticPath, glob), (err, watcher) => {
+      if (err) return console.log(prefix, err.stack)
+      const watched = watcher.relative()
+      console.log(`${prefix} watching ${Object.keys(watched).map(k => `${k}${watched[k]}`).join(', ')}`)
+      watcher.on('changed', (file) => {
+        console.log(`${prefix} update detected ${file}`)
+        for (const client of clients) {
+          client.write(`event: ${path.extname(file)}\n`)
+          client.write(`data: ${webPrefix}/${path.relative(staticPath, file)}\n\n`)
+        }
+      })
     })
-    setInterval(() => {
-      // 💛 beat
-      for (const client of clients) client.write(`\n\n`)
-    }, 10 * 1000)
   })
+
+  setInterval(() => {
+    // 💛 beat
+    for (const client of clients) client.write(`\n\n`)
+  }, 10 * 1000)
 
   return (req, res) => {
     res.writeHead(200, {
