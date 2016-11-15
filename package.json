@@ -1,7 +1,7 @@
 {
   "name": "hot-rld",
   "version": "1.0.0",
-  "description": "Hot reload some browser javascript",
+  "description": "Hot reload some browser javascript and css",
   "main": "index.js",
   "license": "MIT",
   "bin": {
@@ -14,5 +14,14 @@
   },
   "devDependencies": {
     "standard": "^8.5.0"
-  }
+  },
+  "author": "Ben Gourley",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bengourley/hot-rld.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bengourley/hot-rld/issues"
+  },
+  "homepage": "https://github.com/bengourley/hot-rld#readme"
 }
