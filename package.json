@@ -1,6 +1,6 @@
 {
   "name": "hot-rld",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hot reload some browser javascript and css",
   "main": "index.js",
   "license": "MIT",
