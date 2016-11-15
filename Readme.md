@@ -1,6 +1,6 @@
 # hot-rld
 
-Hot reload for browser js files.
+Hot reload for css/js files.
 
 ## Usage
 
@@ -38,7 +38,7 @@ $ yarn add --dev hot-rld
 ## Known issues
 
 Replacing an entire js file is likely to cause a ton of side-effects, so be mindful of
-what you use it on. This was build for [choo](yoshuawyuts/choo) apps which are functional
+what you use it on. This was built for [choo](yoshuawyuts/choo) apps which are functional
 in nature. However, `subscriptions` and other one-time setup side effects can still be a
 pain. You have been warned 😔!
 
