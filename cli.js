@@ -38,8 +38,8 @@ const run = () => {
     sseServer(req, res)
   }
 
-  require('http').createServer(server).listen(port, '127.0.0.1', () => {
-    console.log(`[🔥 ] hot app reload server listening on http://localhost:${port}/`)
+  require('http').createServer(server).listen(port, () => {
+    console.log(`[🔥 ] hot app reload server listening on http://0.0.0.0:${port}/`)
   })
 }
 
