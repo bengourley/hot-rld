@@ -19,7 +19,10 @@ module.exports = `;(function () {
       link.href = event.data + '?cachebust=' + Date.now()
       var prevNode = document.querySelector('link[href^="' + event.data + '"]')
       if (!prevNode) return console.log('[hot-rld] cannot find <link> tag to replace')
-      prevNode.parentNode.replaceChild(link, prevNode)
+      prevNode.parentNode.insertBefore(link, prevNode.nextSibling)
+      function removePrevNode () { if (prevNode.parentNode) prevNode.parentNode.removeChild(prevNode) }
+      link.onload = removePrevNode
+      setTimeout(removePrevNode, 500)
     }, 100)
   })
 })();`
