@@ -8,7 +8,7 @@
     "hot-rld": "cli.js"
   },
   "dependencies": {
-    "gaze": "^1.1.2",
+    "gaze": "bengourley/gaze#debounce-bug",
     "hat": "^0.0.3",
     "minimist": "^1.2.0"
   },
