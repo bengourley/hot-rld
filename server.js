@@ -16,7 +16,7 @@ module.exports = (staticPath, globs, webPrefix) => {
         console.log(`${prefix} update detected ${file}`)
         for (const client of clients) {
           client.write(`event: ${path.extname(file)}\n`)
-          client.write(`data: ${webPrefix}/${path.relative(staticPath, file)}\n\n`)
+          client.write(`data: ${path.normalize(webPrefix + '/')}${path.relative(staticPath, file)}\n\n`)
         }
       })
     })
