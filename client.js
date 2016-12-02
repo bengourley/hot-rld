@@ -1,4 +1,4 @@
-module.exports = `;(function () {
+;(function () {
   var es = new window.EventSource('//localhost:9909')
   es.addEventListener('.js', function (event) {
     setTimeout(function () {
@@ -25,4 +25,4 @@ module.exports = `;(function () {
       setTimeout(removePrevNode, 500)
     }, 100)
   })
-})();`
+})();
