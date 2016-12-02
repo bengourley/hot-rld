@@ -6,19 +6,18 @@ const prefix = '[hot-rld]'
 
 module.exports = (staticPath, globs, webPrefix) => {
   const clients = new Set()
+  const fullPathGlobs = globs.map(glob => path.resolve(staticPath, glob))
 
-  globs.forEach(glob => {
-    gaze(path.resolve(staticPath, glob), (err, watcher) => {
-      if (err) return console.log(prefix, err.stack)
-      const watched = watcher.relative()
-      console.log(`${prefix} watching ${Object.keys(watched).map(k => `${k}${watched[k]}`).join(', ')}`)
-      watcher.on('changed', (file) => {
-        console.log(`${prefix} update detected ${file}`)
-        for (const client of clients) {
-          client.write(`event: ${path.extname(file)}\n`)
-          client.write(`data: ${path.normalize(webPrefix + '/')}${path.relative(staticPath, file)}\n\n`)
-        }
-      })
+  gaze(fullPathGlobs, { debounceDelay: 50 }, (err, watcher) => {
+    if (err) return console.log(prefix, err.stack)
+    const watched = watcher.relative()
+    console.log(`${prefix} watching ${Object.keys(watched).map(k => `${k}${watched[k]}`).join(', ')}`)
+    watcher.on('changed', (file) => {
+      console.log(`${prefix} update detected ${file}`)
+      for (const client of clients) {
+        client.write(`event: ${path.extname(file)}\n`)
+        client.write(`data: ${path.normalize(webPrefix + '/')}${path.relative(staticPath, file)}\n\n`)
+      }
     })
   })
 

@@ -4,6 +4,9 @@
   "description": "Hot reload some browser javascript and css",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "test": "standard . && tape test/*.test.js"
+  },
   "bin": {
     "hot-rld": "cli.js"
   },
@@ -13,7 +16,8 @@
     "minimist": "^1.2.0"
   },
   "devDependencies": {
-    "standard": "^8.5.0"
+    "standard": "^8.5.0",
+    "tape": "^4.6.3"
   },
   "author": "Ben Gourley",
   "repository": {
