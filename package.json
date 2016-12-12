@@ -29,6 +29,6 @@
   },
   "homepage": "https://github.com/bengourley/hot-rld#readme",
   "browser": {
-    "hot-rld/client.js": "./_client.js"
+    "./client.js": "./_client.js"
   }
 }
