@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/bengourley/hot-rld/issues"
   },
-  "homepage": "https://github.com/bengourley/hot-rld#readme"
+  "homepage": "https://github.com/bengourley/hot-rld#readme",
+  "browser": {
+    "hot-rld/client.js": "./_client.js"
+  }
 }
